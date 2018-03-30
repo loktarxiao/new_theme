@@ -1,0 +1,28 @@
+{
+    "Name": "Indigo",
+    "Version": "1.2",
+    "Author": "loktarxiao",
+    "AuthorUrl": "https://github.com/loktarxiao",
+    "Desc": "配置主题，请编辑修改theme.json文件。",
+    "Site": {
+        "Name": "SCP-173' blog",
+        "Keywords": "loktarxiao, scp-173",
+        "Desc": "猥琐发育别浪",
+        "Owner": "Loktar Xiao",
+        "Email": "familiy276@jp710.onmicrosoft.com",
+        "ICP": " 湘ICP备16015387号-1",
+        "Reward": true,
+        "RewardTitle": "请我吃鸡",
+        "Copyright": "非特殊说明，均为原创，原创文章，未经允许谢绝转载。",
+        "OtherMenus": [
+            {"Name": "GitHub", "Icon": "fa-github", "Link": "https://github.com/loktarxiao"},
+            {"Name": "知乎", "Icon": "fa-clone", "Link": "https://www.zhihu.com/people/xiao-kai-wen-30"}
+        ],
+        "Comment": {
+            "ChangYan": {
+                "AppId": "cytxjoL6H",
+                "Config": "prod_98e1da22d1dba6f615877ef12a2ebf60"
+            }
+        }
+    }
+}

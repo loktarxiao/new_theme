@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="cn">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+		<meta name="author" content="{{$.themeInfo.Site.Owner}}">
+		<meta name="description" content="{{$.themeInfo.Site.Desc}}">
+		<meta name="keywords" content="{{$.themeInfo.Site.Keywords}}">
+		<title>
+			{{if $.curIsIndex}}
+				{{$.themeInfo.Site.Name}}
+			{{else if $.curIsCate}}
+				Category-{{$.curCateTitle}}
+			{{else if $.curIsSearch}}
+				Search-{{$.keywords}}
+			{{else if $.curIsTags}}
+				Tags
+			{{else if $.curIsTagPosts}}
+				Tag-{{$.curTag}}
+			{{else if $.curIsPost}}
+				{{$.post.Title}}
+			{{else if $.curIsSingle}}
+				{{$.single.Title}}
+			{{else if $.curIsArchive}}
+				Archives
+			{{end}}
+		</title>
+		<link rel="shortcut icon" href="{{$.themeBaseUrl}}/images/favicon.jpg" type="image/jpg"/>
+		<link href="{{$.themeBaseUrl}}/style.min.css" rel="stylesheet">
+		<link href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+		<script>window.lazyScripts=[]</script>
+	</head>
+<body>
+	<div id="loading" class="active"></div>
+	<aside id="menu">
+		<div class="inner flex-row-vertical">
+		  <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+			  <i class="fa fa-lg fa-arrow-left"></i>
+		  </a>
+		  <div class="brand-wrap" style="background-image:url({{$.themeBaseUrl}}/images/brand.jpg)">
+			<div class="brand">
+			  <a href="{{$.siteUrl}}" class="avatar waves-effect waves-circle waves-light">
+				{{ if $.blogInfo.UserLogo}}
+					<img src="{{$.blogInfo.UserLogo}}" id="userLogo">
+				{{else}}
+					<img src="{{$.siteUrl}}/images/blog/default_avatar.png" id="userLogo">
+				{{end}}
+			  </a>
+			  <hgroup class="introduce">
+				<h5 class="nickname">{{$.themeInfo.Site.Owner}}</h5>
+				<a class="mail" href="mailto:{{$.themeInfo.Site.Email}}">{{$.themeInfo.Site.Email}}</a>
+			  </hgroup>
+			</div>
+		  </div>
+		  <div class="scroll-wrap flex-col">
+			<ul class="nav">
+				<li class="waves-block waves-effect {{if $.curIsIndex}}active{{end}}">
+					<a href="{{.indexUrl}}">
+						<i class="fa fa-lg fa-home"></i>Home
+					</a>
+				</li>
+	  		    <!-- 分类页 -->
+				{{range $.cates}}
+				<li class="waves-block waves-effect {{if eq .CateId $.curCateId}}active{{end}}">
+					<a href="{{$.cateUrl}}/{{.UrlTitle}}">
+						<i class="fa fa-lg fa-"></i>{{.Title}}
+					</a>
+				</li>
+				{{end}}
+				<li class="waves-block waves-effect {{if $.curIsArchive}}active{{end}}">
+					<a href="{{$.archiveUrl}}">
+						<i class="fa fa-lg fa-archive"></i>Archives
+					</a>
+				</li>
+				<li class="waves-block waves-effect {{if $.curIsTags}}active{{end}}">
+					<a href="{{$.tagsUrl}}">
+						<i class="fa fa-lg fa-tags"></i>Tags
+					</a>
+				</li>
+				<!-- 单页 -->
+				{{range $.singles}}
+				<li class="waves-block waves-effect {{if eq $.curSingleId .SingleId}}active{{end}}">
+					<a href="{{$.singleUrl}}/{{.UrlTitle}}">
+						<i class="fa fa-lg fa-html5"></i>{{.Title}}
+					</a>
+				</li>
+				{{end}}
+				{{range $.themeInfo.Site.OtherMenus}}
+				<li class="waves-block waves-effect">
+					<a href="{{.Link}}" target="_blank">
+						<i class="fa fa-lg {{.Icon}}"></i>{{.Name}}
+					</a>
+				</li>
+				{{end}}
+			</ul>
+		  </div>
+		</div>
+	</aside>
+	<main id="main">

@@ -1,0 +1,32 @@
+{{if gt $.paging.TotalPage 1}}
+
+<!-- 上一页 -->
+{{if gt $.paging.CurPage 1}}
+    {{set . "prePageClass" ""}}
+    {{set . "prePageUrl" (urlConcat $.pagingBaseUrl "page" (incr $.paging.CurPage -1)) }}
+{{else}}
+    {{set . "prePageClass" "disabled"}}
+    {{set . "prePageUrl" "#"}}
+{{end}}
+
+<!-- 下一页 -->
+{{if lt $.paging.CurPage $.paging.TotalPage }}
+    {{set . "nextPageClass" ""}}
+    {{set . "nextPageUrl" (urlConcat $.pagingBaseUrl "page" (incr $.paging.CurPage 1)) }}
+{{else}}
+    {{set . "nextPageClass" "disabled"}}
+    {{set . "nextPageUrl" "#"}}
+{{end}}
+
+<nav id="page-nav">
+    <div class="inner">
+        <a class="extend next waves-effect waves-button {{$.prePageClass}}" href="{{$.prePageUrl}}" rel="pre">
+            上一页
+        </a>
+        <a class="extend next waves-effect waves-button {{$.nextPageClass}}" href="{{$.nextPageUrl}}" rel="next">
+            下一页
+        </a>
+    </div>
+</nav>
+
+{{end}}

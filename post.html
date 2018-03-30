@@ -1,0 +1,204 @@
+{{template "header.html" .}}
+{{template "inner_header.html" .}}
+
+<img style="display: none" src="{{$.blogInfo.UserLogo}}"/>
+<div class="container body-wrap">
+	<aside class="post-widget">
+		<nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+			<h4 id="toc-title">TOC</h4>
+		</nav>
+	</aside>
+	<article id="post" class="post-article article-type-post fade in" itemprop="blogPost">
+		<div class="post-card">
+			<h1 class="post-card-title">
+				{{if $.post.Title}}
+					{{$.post.Title}}
+				{{else}}
+					Untitled
+				{{end}}
+			</h1>
+			<div class="post-meta">
+				<time class="post-time" title="{{$.post.PublicTime | datetime}}" itemprop="datePublished">{{$.post.PublicTime | datetime}} </time>
+			</div>
+			<div class="post-content" id="post-content" itemprop="postContent">
+			{{if $.post.IsMarkdown }}
+				<div id="markdownContent" style="display: none">
+					<!-- 用textarea装html, 防止得到的值失真 -->
+					<textarea>{{$.post.Content | raw}}</textarea>
+				</div>
+				<div style="padding: 20px; text-align: center">
+					<img src="{{$.themeBaseUrl}}/images/loading.gif" />
+				</div>
+			{{else}}
+				{{$.post.Content | raw}}
+			{{end}}
+			</div>
+
+			<blockquote class="post-copyright">
+				<div class="content">
+					{{$.themeInfo.Site.Copyright}}
+					<br>原始链接：<a href="{{$.siteUrl}}{{$.postUrl}}/{{$.post.UrlTitle}}" target="_blank" rel="external">{{$.post.Title}}</a>
+				</div>
+				<footer>
+					<a href="{{$.themeInfo.AuthorUrl}}">
+					{{ if $.blogInfo.UserLogo}}
+						<img src="{{$.blogInfo.UserLogo}}" id="userLogo">
+					{{else}}
+						<img src="{{$.siteUrl}}/images/blog/default_avatar.png" id="userLogo">
+					{{end}}
+					{{$.blogInfo.Username}}
+					</a>
+				</footer>
+			</blockquote>
+			{{if $.themeInfo.Site.Reward}}
+			<div class="page-reward">
+				<a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+			</div>
+			{{end}}
+
+			<div class="post-footer">
+				{{if $.post.Tags}} 
+				<ul class="article-tag-list">
+					{{range $index,$tag := $.post.Tags}}
+					<li class="article-tag-list-item"><a class="article-tag-list-link waves-effect waves-button" href="{{$.tagPostsUrl}}/{{$tag}}">{{$tag}}</a></li>
+					{{end}}
+				</ul>
+				{{end}}
+
+				<div class="page-share-wrap">
+					<div class="page-share" id="pageShare">
+						<ul class="reset share-icons">
+							<li>
+							<a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url={{$.siteUrl}}{{$.postUrl}}/{{$.post.UrlTitle}}&title={{$.post.Title}}&pic=" data-title="微博">
+								<i class="fa fa-weibo"></i>
+							</a>
+							</li>
+							<li>
+							<a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+								<i class="fa fa-weixin"></i>
+							</a>
+							</li>
+							<li>
+							<a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url={{$.siteUrl}}{{$.postUrl}}/{{$.post.UrlTitle}}&title={{$.post.Title}}&source={{$.post.Title}}" data-title=" QQ">
+								<i class="fa fa-qq"></i>
+							</a>
+							</li>
+						</ul>
+					</div>
+					<a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+						<i class="fa fa-share-alt fa-lg"></i>
+					</a>
+				</div>
+			</div>
+		</div>
+		
+		{{if or $.prePost $.nextPost}}
+		<nav class="post-nav flex-row flex-justify-between{{if not $.prePost}} flex-row-reverse {{end}}">
+			{{if $.prePost}}
+			<div class="waves-block waves-effect prev">
+				<a href="{{$.postUrl}}/{{$.prePost.UrlTitle}}" id="post-prev" class="post-nav-link">
+				<div class="tips"><i class="fa fa-angle-left fa-lg fa-pr"></i> Prev</div>
+				<h4 class="title">{{$.prePost.Title}}</h4>
+				</a>
+			</div>
+			{{end}}
+			{{if $.nextPost}}
+			<div class="waves-block waves-effect next">
+				<a href="{{$.postUrl}}/{{$.nextPost.UrlTitle}}" id="post-next" class="post-nav-link">
+				<div class="tips">Next <i class="fa fa-angle-right fa-lg fa-pl"></i></div>
+				<h4 class="title">{{$.nextPost.Title}}</h4>
+				</a>
+			</div>
+			{{end}}
+		</nav>
+		{{end}}
+
+		<!-- share & comment -->
+		{{template "share_comment.html" $}}
+	</article>
+
+	<div class="page-modal wx-share" id="wxShare">
+		<a class="close" href="javascript:;"><i class="fa fa-close"></i></a>
+		<p>扫一扫，分享到微信</p>
+		<img src="//api.qrserver.com/v1/create-qr-code/?data={{$.siteUrl}}{{$.postUrl}}/{{$.post.UrlTitle}}" alt="微信分享二维码">
+	</div>
+
+	{{if $.themeInfo.Site.Reward}}
+	<div id="reward" class="page-modal reward-lay">
+		<a class="close" href="javascript:;"><i class="fa fa-close"></i></a>
+		<h3 class="reward-title">
+			<i class="fa fa-quote-left"></i>
+			{{$.themeInfo.Site.RewardTitle}}
+			<i class="fa fa-quote-right"></i>
+		</h3>
+		<div class="reward-content">
+			<div class="reward-code">
+				<img id="rewardCode" src="{{$.themeBaseUrl}}/images/wechat.jpg" alt="打赏二维码">
+			</div>
+			<label class="reward-toggle">
+				<input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+					data-wechat="{{$.themeBaseUrl}}/images/wechat.jpg" data-alipay="{{$.themeBaseUrl}}/images/alipay.jpg">
+				<div class="reward-toggle-ctrol">
+					<span class="reward-toggle-item wechat">微信</span>
+					<span class="reward-toggle-label"></span>
+					<span class="reward-toggle-item alipay">支付宝</span>
+				</div>
+			</label>
+		</div>
+	</div>
+	{{end}}
+</div>
+
+<script src="{{$.jQueryUrl}}"></script>
+<!-- toc -->
+<script src="{{$.themeBaseUrl}}/toc.js"></script>
+<script>
+var BLOG = {
+	ROOT: "/",
+	SHARE: true,
+	REWARD: true
+};
+function createToc() {
+	$('#post-content').find('h1,h2,h3,h4,h5,h6').each(function () {
+		var text = $(this).text();
+		$(this).attr('id', text);
+		$(this).html('<a href="#' + text + '" class="headerlink" title="' + text + '"></a>' + text);
+	});
+	var toc = tocHelper($('#post-content'), {
+		class: 'post-toc',
+		list_number: true
+	});
+	$(toc).insertAfter('#toc-title');
+}
+</script>
+<!-- 
+markdown 
+调用markdown来解析得到html
+-->
+<link href="/js/google-code-prettify/prettify.css" type="text/css" rel="stylesheet"/>
+<script src="/js/google-code-prettify/prettify.js"></script>
+{{if $.post.IsMarkdown }}
+<script src="/public/libs/md2html/md2html.js"></script>
+<script>
+var content = $.trim($("#markdownContent textarea").val());
+md2Html(content, $("#post-content"), function(html) {
+	$("pre").addClass("highlight");
+	prettyPrint();
+	$('.prettyprint').css("border", "none");
+	$('.prettyprint').css("border-radius", "0");
+	createToc();
+});
+</script>
+<!-- 不是markdown -->
+{{else}}
+<script>
+$(function() {
+	prettyPrint();
+	$('.prettyprint').css("border", "none");
+	$('.prettyprint').css("border-radius", "0");
+	createToc();
+});
+</script>
+{{end}}
+
+{{template "footer.html" $}}

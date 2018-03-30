@@ -1,0 +1,48 @@
+{{template "header.html" .}}
+{{template "inner_header.html" .}}
+
+<div class="container body-wrap fade">
+{{range $.archives}}
+{{$year := .Year}}
+	{{range .MonthAchives}}
+	<h3 class="archive-separator">{{$year}}-{{.Month}}</h3>
+	<div class="waterfall">
+		{{range .Posts}}
+		<div class="waterfall-item">
+			<article class="article-card archive-article">
+				<div class="post-meta">
+					<time class="post-time" datetime="{{dateFormat .PublicTime "2006-01-02"}}" itemprop="datePublished">{{dateFormat .PublicTime "2006-01-02"}}</time>
+				</div>
+				<h3 class="post-title" itemprop="name">
+					<a class="post-title-link" href="{{$.postUrl}}/{{.UrlTitle}}">
+					{{if .Title}}
+						{{.Title}}
+					{{else}}
+						Untitled
+					{{end}} 
+					</a>
+				</h3>
+				{{if .Tags}} 
+				<div class="post-footer">
+					<ul class="article-tag-list">
+						{{range $index,$tag := .Tags}}
+						<li class="article-tag-list-item"><a class="article-tag-list-link waves-effect waves-button" href="{{$.tagPostsUrl}}/{{$tag}}">{{$tag}}</a></li>
+						{{end}}
+					</ul>
+				</div>
+				{{end}}
+			</article>
+		</div>
+		{{end}}
+	</div>
+	{{end}}
+{{end}}
+</div>
+<script>
+var BLOG = {
+	ROOT: "/",
+	SHARE: false,
+	REWARD: false
+};
+</script>
+{{template "footer.html" .}}

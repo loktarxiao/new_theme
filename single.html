@@ -1,0 +1,26 @@
+{{template "header.html" .}}
+{{template "inner_header.html" .}}
+
+<div class="container body-wrap">
+	<article id="post" class="post-article article-type-post fade in" itemprop="blogPost">
+		<div class="post-card">
+			<h1 class="post-card-title">{{.single.Title}}</h1>
+			<div class="post-meta">
+				<time class="post-time" title="{{$.single.UpdatedTime | datetime}}" itemprop="datePublished">{{$.single.UpdatedTime | datetime}}</time>
+			</div>
+			<div class="post-content" id="post-content" itemprop="postContent">
+			{{$.single.Content | raw}}
+			</div>
+		</div>
+	</article>
+</div>
+
+<script>
+var BLOG = {
+ROOT: "/",
+SHARE: false,
+REWARD: false
+};
+</script>
+
+{{template "footer.html" $}}

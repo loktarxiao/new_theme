@@ -1,0 +1,73 @@
+<header class="top-header" id="header">
+        <div class="flex-row">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+                <i class="fa fa-lg fa-navicon"></i>
+            </a>
+            <div class="flex-col header-title ellipsis">
+    {{if $.curIsIndex}}
+        {{$.themeInfo.Site.Name}}
+    {{else if $.curIsCate}}
+        分类-{{$.curCateTitle}}
+    {{else if $.curIsSearch}}
+        搜索-{{$.keywords}}
+    {{else if $.curIsTags}}
+        我的标签
+    {{else if $.curIsTagPosts}}
+        标签-{{$.curTag}}
+    {{else if $.curIsPost}}
+        {{if $.post.Title}}
+            {{$.post.Title}}
+        {{else}}
+            Untitled
+        {{end}}
+    {{else if $.curIsSingle}}
+        {{$.single.Title}}
+    {{else if $.curIsArchive}}
+        归档
+    {{end}}
+            </div>
+            <div class="search-wrap" id="search-wrap">
+                <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                    <i class="fa fa-lg fa-chevron-left"></i>
+                </a>
+                <form action="{{$.searchUrl}}" method="get">
+                    <input type="text" name="keywords" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字，进行搜索">
+                </form>
+                <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                    <i class="fa fa-lg fa-search"></i>
+                </a>
+            </div>
+        </div>
+    </header>
+    <header class="content-header {{if or $.curIsPost $.curIsSingle}} post-header {{else}} index-header {{end}}">
+        <div class="container fade-scale">
+            <h1 class="title">
+            {{if $.curIsIndex}}
+                {{$.themeInfo.Site.Name}}
+            {{else if $.curIsCate}}
+                分类-{{$.curCateTitle}}
+            {{else if $.curIsSearch}}
+                搜索-{{$.keywords}}
+            {{else if $.curIsTags}}
+                我的标签
+            {{else if $.curIsTagPosts}}
+                标签-{{$.curTag}}
+            {{else if $.curIsPost}}
+                {{if $.post.Title}}
+                    {{$.post.Title}}
+                {{else}}
+                    Untitled
+                {{end}}
+            {{else if $.curIsSingle}}
+                {{$.single.Title}}
+            {{else if $.curIsArchive}}
+                归档
+            {{end}}
+            </h1>
+            <h4 class="subtitle">
+    {{if $.curIsIndex}}
+        {{$.themeInfo.Site.Desc}}
+    {{end}}
+            </h4>
+        </div>
+    </header>
